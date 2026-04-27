@@ -1,0 +1,62 @@
+[
+  {
+    "name": "AMAP",
+    "installed": "0.30",
+    "type": "html",
+    "url": "https://www.sikorskiy.net/info/prj/amap/index.html",
+    "selector": "#download + ul > li:nth-child(2) ul li a",
+    "transform": "split:v"
+  },
+  {
+    "name": "AutoHotkey",
+    "installed": "v2.0.19",
+    "type": "github",
+    "repo": "AutoHotkey/AutoHotkey"
+  },
+  {
+    "name": "Autoruns",
+    "installed": "v14.11",
+    "type": "html",
+    "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns",
+    "selector": "[id^='autoruns-']",
+    "transform": "split: "
+  },
+  {
+    "name": "BalenaEtcher",
+    "installed": "v2.1.4",
+    "type": "github",
+    "repo": "balena-io/etcher"
+  },
+  {
+    "name": "BleachBit",
+    "installed": "v5.0.2",
+    "type": "github",
+    "repo": "bleachbit/bleachbit"
+  },
+  {
+    "name": "Bruno",
+    "installed": "v3.2.0",
+    "type": "github",
+    "repo": "usebruno/bruno"
+  },
+  {
+    "name": "CMake",
+    "installed": "v4.1.2",
+    "type": "github",
+    "repo": "Kitware/CMake"
+  },
+  {
+    "name": "ConEmu",
+    "installed": "v23.07.24",
+    "type": "github",
+    "repo": "ConEmu/ConEmu"
+  },
+  {
+    "name": "CurrPorts",
+    "installed": "v2.77",
+    "type": "html",
+    "url": "https://www.nirsoft.net/utils/cports.html",
+    "selector": ".utilcaption tbody tr :nth-child(2)",
+    "transform": "regex:v\\d+\\.\\d+"
+  }
+]
