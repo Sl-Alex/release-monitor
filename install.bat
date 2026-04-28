@@ -6,7 +6,12 @@ set ROOT=%~dp0
 set TOOLS=%ROOT%tools
 set TMP=%ROOT%_tmp_install
 
-mkdir "%TOOLS%" 2>nul
+if exist "%TOOLS%\deno.exe" (
+	echo.
+	echo Deno is already installed, nothing to do
+	exit /b 0
+)
+
 mkdir "%TMP%" 2>nul
 
 cd /d "%TMP%"
