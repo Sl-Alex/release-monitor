@@ -266,4 +266,4 @@ go run ./cmd/release-monitor
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE.txt](LICENSE.txt).
