@@ -1,3 +1,2 @@
-# Ignore Deno executable (too big)
-# Use install.bat to download and unzip it to the "tools" folder or do it manually
-tools/deno.exe
+go.sum
+config.json
