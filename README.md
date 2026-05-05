@@ -17,6 +17,9 @@ Usage of release-monitor:
         path to config file (default "config.json")
   -github-token string
         GitHub access token
+  -only-updates
+        show only apps with updates
+  -u    short for --only-updates
   -v    verbose output
 ```
 

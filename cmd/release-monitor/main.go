@@ -16,6 +16,8 @@ func main() {
 	flag.StringVar(configPath, "c", "config.json", "short for --config")
 	githubToken := flag.String("github-token", "", "GitHub access token")
 	verbose := flag.Bool("v", false, "verbose output")
+	onlyUpdates := flag.Bool("only-updates", false, "show only apps with updates")
+    flag.BoolVar(onlyUpdates, "u", false, "short for --only-updates")
 
 	flag.Parse()
 
@@ -37,6 +39,11 @@ func main() {
 
 	for _, a := range cfg.Apps {
 		result := app.Process(ctx, a)
+
+        if *onlyUpdates && !result.Changed && result.Err == "" {
+            continue
+        }
+
 		fmt.Println(app.Format(result))
 	}
 }
