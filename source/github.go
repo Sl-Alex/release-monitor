@@ -46,6 +46,8 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 		req.Header.Set("Authorization", "Bearer "+ctx.GitHubToken)
 	}
 
+    app_context.Debug(ctx, "github request: %s", url)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
@@ -60,6 +62,8 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 	if err := json.NewDecoder(resp.Body).Decode(&release); err != nil {
 		return "", err
 	}
+
+    app_context.Debug(ctx, "github response tag: %s", release.TagName)
 
 	if release.TagName == "" {
 		return "", fmt.Errorf("empty tag_name in response")

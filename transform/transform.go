@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"release-monitor/model"
+	"release-monitor/app_context"
 )
 
 type Transformer interface {
@@ -15,7 +16,7 @@ var registry = map[string]Transformer{
 	"regex": RegexTransformer{},
 }
 
-func Apply(input string, transforms []model.Transform) (string, error) {
+func Apply(ctx app_context.Context, input string, transforms []model.Transform) (string, error) {
 	current := input
 
 	for _, t := range transforms {
@@ -25,7 +26,10 @@ func Apply(input string, transforms []model.Transform) (string, error) {
 		}
 
 		var err error
-		current, err = transformer.Apply(current, t.Params)
+
+        app_context.Debug(ctx, "before transform: %s", current)
+        current, err = transformer.Apply(current, t.Params)
+        app_context.Debug(ctx, "after %s transform: %s", t.Type, current)
 		if err != nil {
 			return "", err
 		}

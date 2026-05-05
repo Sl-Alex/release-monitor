@@ -17,10 +17,12 @@ Usage of release-monitor:
         path to config file (default "config.json")
   -github-token string
         GitHub access token
-  -v    verbose output (to be done)
+  -v    verbose output
 ```
 
 `-config` is optional if the configuration file is in the same folder.
+
+Please note that verbose output goes to stderr.
 
 ### Example Output
 

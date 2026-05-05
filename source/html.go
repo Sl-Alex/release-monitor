@@ -33,6 +33,8 @@ func fetchHTML(ctx app_context.Context, cfg *model.HTMLConfig) (string, error) {
 
 	req.Header.Set("User-Agent", "release-monitor")
 
+    app_context.Debug(ctx, "fetching url: %s", cfg.URL)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
@@ -55,6 +57,8 @@ func fetchHTML(ctx app_context.Context, cfg *model.HTMLConfig) (string, error) {
 
 	// Text of the first match
 	text := strings.TrimSpace(selection.First().Text())
+
+    app_context.Debug(ctx, "raw html text: %s", text)
 
 	if text == "" {
 		return "", fmt.Errorf("empty text for selector: %s", cfg.Selector)

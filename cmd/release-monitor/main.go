@@ -15,7 +15,7 @@ func main() {
 	configPath := flag.String("config", "config.json", "path to config file")
 	flag.StringVar(configPath, "c", "config.json", "short for --config")
 	githubToken := flag.String("github-token", "", "GitHub access token")
-	verbose := flag.Bool("v", false, "verbose output (to be done)")
+	verbose := flag.Bool("v", false, "verbose output")
 
 	flag.Parse()
 
