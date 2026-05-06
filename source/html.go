@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 
 	"release-monitor/app_context"
 	"release-monitor/model"
@@ -23,7 +22,7 @@ func fetchHTML(ctx app_context.Context, cfg *model.HTMLConfig) (string, error) {
 	}
 
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: ctx.Timeout,
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -35,7 +34,7 @@ func fetchHTML(ctx app_context.Context, cfg *model.HTMLConfig) (string, error) {
 
 	app_context.Debug(ctx, "fetching url: %s", cfg.URL)
 
-	resp, err := client.Do(req)
+	resp, err := doRequestWithRetry(ctx, client, req)
 	if err != nil {
 		return "", err
 	}

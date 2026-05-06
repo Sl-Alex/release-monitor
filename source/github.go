@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 
 	"release-monitor/app_context"
 	"release-monitor/model"
@@ -32,7 +31,7 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 	url := fmt.Sprintf("https://api.github.com/repos/%s/releases/latest", repo)
 
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: ctx.Timeout,
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -48,7 +47,7 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 
 	app_context.Debug(ctx, "github request: %s", url)
 
-	resp, err := client.Do(req)
+	resp, err := doRequestWithRetry(ctx, client, req)
 	if err != nil {
 		return "", err
 	}

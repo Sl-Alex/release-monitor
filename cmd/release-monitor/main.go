@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"release-monitor/app"
 	"release-monitor/app_context"
@@ -18,6 +19,8 @@ func main() {
 	verbose := flag.Bool("v", false, "verbose output")
 	onlyUpdates := flag.Bool("only-updates", false, "show only apps with updates")
 	flag.BoolVar(onlyUpdates, "u", false, "short for --only-updates")
+	timeout := flag.Int("timeout", 10, "http timeout in seconds")
+	retries := flag.Int("retries", 2, "number of retries")
 
 	flag.Parse()
 
@@ -30,6 +33,8 @@ func main() {
 	ctx := app_context.Context{
 		GitHubToken: token,
 		Verbose:     *verbose,
+		Timeout:     time.Duration(*timeout) * time.Second,
+		Retries:     *retries,
 	}
 
 	cfg, err := config.LoadConfig(*configPath)

@@ -19,6 +19,10 @@ Usage of release-monitor:
         GitHub access token
   -only-updates
         show only apps with updates
+  -retries int
+        number of retries (default 2)
+  -timeout int
+        http timeout in seconds (default 10)
   -u    short for --only-updates
   -v    verbose output
 ```
