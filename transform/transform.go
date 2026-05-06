@@ -3,8 +3,8 @@ package transform
 import (
 	"fmt"
 
-	"release-monitor/model"
 	"release-monitor/app_context"
+	"release-monitor/model"
 )
 
 type Transformer interface {
@@ -27,9 +27,9 @@ func Apply(ctx app_context.Context, input string, transforms []model.Transform) 
 
 		var err error
 
-        app_context.Debug(ctx, "before transform: %s", current)
-        current, err = transformer.Apply(current, t.Params)
-        app_context.Debug(ctx, "after %s transform: %s", t.Type, current)
+		app_context.Debug(ctx, "before transform: %s", current)
+		current, err = transformer.Apply(current, t.Params)
+		app_context.Debug(ctx, "after %s transform: %s", t.Type, current)
 		if err != nil {
 			return "", err
 		}

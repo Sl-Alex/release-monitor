@@ -46,7 +46,7 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 		req.Header.Set("Authorization", "Bearer "+ctx.GitHubToken)
 	}
 
-    app_context.Debug(ctx, "github request: %s", url)
+	app_context.Debug(ctx, "github request: %s", url)
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -63,7 +63,7 @@ func fetchGitHub(ctx app_context.Context, cfg *model.GitHubConfig) (string, erro
 		return "", err
 	}
 
-    app_context.Debug(ctx, "github response tag: %s", release.TagName)
+	app_context.Debug(ctx, "github response tag: %s", release.TagName)
 
 	if release.TagName == "" {
 		return "", fmt.Errorf("empty tag_name in response")

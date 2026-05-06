@@ -17,7 +17,7 @@ func main() {
 	githubToken := flag.String("github-token", "", "GitHub access token")
 	verbose := flag.Bool("v", false, "verbose output")
 	onlyUpdates := flag.Bool("only-updates", false, "show only apps with updates")
-    flag.BoolVar(onlyUpdates, "u", false, "short for --only-updates")
+	flag.BoolVar(onlyUpdates, "u", false, "short for --only-updates")
 
 	flag.Parse()
 
@@ -29,43 +29,43 @@ func main() {
 
 	ctx := app_context.Context{
 		GitHubToken: token,
-        Verbose:     *verbose,
-    }
+		Verbose:     *verbose,
+	}
 
-    cfg, err := config.LoadConfig(*configPath)
-    if err != nil {
-        log.Fatal(err)
-    }
+	cfg, err := config.LoadConfig(*configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    hasUpdates := false
-    hasErrors := false
+	hasUpdates := false
+	hasErrors := false
 
-    for _, a := range cfg.Apps {
-        result := app.Process(ctx, a)
+	for _, a := range cfg.Apps {
+		result := app.Process(ctx, a)
 
-        if result.Changed {
-            hasUpdates = true
-        }
+		if result.Changed {
+			hasUpdates = true
+		}
 
-        if result.Err != "" {
-            hasErrors = true
-        }
-    
-        if *onlyUpdates && !result.Changed && result.Err == "" {
-            continue
-        }
+		if result.Err != "" {
+			hasErrors = true
+		}
 
-        fmt.Println(app.Format(result))
-    }
+		if *onlyUpdates && !result.Changed && result.Err == "" {
+			continue
+		}
 
-    if hasErrors {
-        os.Exit(2)
-    }
+		fmt.Println(app.Format(result))
+	}
 
-    if hasUpdates {
-        os.Exit(1)
-    }
+	if hasErrors {
+		os.Exit(2)
+	}
 
-    os.Exit(0)
+	if hasUpdates {
+		os.Exit(1)
+	}
+
+	os.Exit(0)
 
 }

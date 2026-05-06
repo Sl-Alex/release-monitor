@@ -10,11 +10,10 @@ import (
 func Process(ctx app_context.Context, app model.AppConfig) model.Result {
 	var result model.Result
 
-    app_context.Debug(ctx, "processing app: %s", app.Name)
+	app_context.Debug(ctx, "processing app: %s", app.Name)
 
 	result.Name = app.Name
 	result.CurrentVersion = app.Current
-
 
 	// Fetch the source (html/github/...)
 	raw, err := source.Fetch(ctx, app)
