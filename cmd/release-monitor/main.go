@@ -29,21 +29,43 @@ func main() {
 
 	ctx := app_context.Context{
 		GitHubToken: token,
-		Verbose:     *verbose,
-	}
+        Verbose:     *verbose,
+    }
 
-	cfg, err := config.LoadConfig(*configPath)
-	if err != nil {
-		log.Fatal(err)
-	}
+    cfg, err := config.LoadConfig(*configPath)
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	for _, a := range cfg.Apps {
-		result := app.Process(ctx, a)
+    hasUpdates := false
+    hasErrors := false
 
+    for _, a := range cfg.Apps {
+        result := app.Process(ctx, a)
+
+        if result.Changed {
+            hasUpdates = true
+        }
+
+        if result.Err != "" {
+            hasErrors = true
+        }
+    
         if *onlyUpdates && !result.Changed && result.Err == "" {
             continue
         }
 
-		fmt.Println(app.Format(result))
-	}
+        fmt.Println(app.Format(result))
+    }
+
+    if hasErrors {
+        os.Exit(2)
+    }
+
+    if hasUpdates {
+        os.Exit(1)
+    }
+
+    os.Exit(0)
+
 }

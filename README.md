@@ -38,6 +38,13 @@ release-monitor -c path/to/sample/config.json
 > BleachBit: update available (v5.0.2 → v6.0.0)
 ```
 
+### Exit Codes
+```
+0 = all apps are up to date
+1 = updates available
+2 = errors occurred (results may be incomplete)
+```
+
 ### Configuring
 
 Create a `config.json` file describing:
