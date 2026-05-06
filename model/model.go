@@ -31,9 +31,9 @@ type Transform struct {
 }
 
 type Result struct {
-	Name           string
-	CurrentVersion string
-	NewVersion     string
-	Changed        bool
-	Err            string
+	Name           string `json:"name"`
+	CurrentVersion string `json:"current"`
+	NewVersion     string `json:"latest"`
+	Changed        bool   `json:"changed"`
+	Err            string `json:"error,omitempty"`
 }

@@ -8,13 +8,15 @@ It compares versions stored in `config.json` with versions fetched from external
 
 Here are all command-line options:
 
-```bash
+```
 release-monitor --help
 Usage of release-monitor:
   -c string
         short for --config (default "config.json")
   -config string
         path to config file (default "config.json")
+  -format string
+        output format: text|json (default "text")
   -github-token string
         GitHub access token
   -only-updates

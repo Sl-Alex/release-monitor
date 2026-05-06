@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -10,6 +11,7 @@ import (
 	"release-monitor/app"
 	"release-monitor/app_context"
 	"release-monitor/config"
+	"release-monitor/model"
 )
 
 func main() {
@@ -21,6 +23,7 @@ func main() {
 	flag.BoolVar(onlyUpdates, "u", false, "short for --only-updates")
 	timeout := flag.Int("timeout", 10, "http timeout in seconds")
 	retries := flag.Int("retries", 2, "number of retries")
+	format := flag.String("format", "text", "output format: text|json")
 
 	flag.Parse()
 
@@ -45,8 +48,12 @@ func main() {
 	hasUpdates := false
 	hasErrors := false
 
+	var results []model.Result
+
 	for _, a := range cfg.Apps {
 		result := app.Process(ctx, a)
+
+		results = append(results, result)
 
 		if result.Changed {
 			hasUpdates = true
@@ -56,11 +63,34 @@ func main() {
 			hasErrors = true
 		}
 
-		if *onlyUpdates && !result.Changed && result.Err == "" {
-			continue
+		if *format == "text" {
+			if *onlyUpdates && !result.Changed && result.Err == "" {
+				continue
+			}
+
+			fmt.Println(app.Format(result))
+		}
+	}
+
+	if *format == "json" {
+		output := results
+
+		if *onlyUpdates {
+			var filtered []model.Result
+			for _, r := range results {
+				if r.Changed || r.Err != "" {
+					filtered = append(filtered, r)
+				}
+			}
+			output = filtered
 		}
 
-		fmt.Println(app.Format(result))
+		data, err := json.MarshalIndent(output, "", "  ")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(string(data))
 	}
 
 	if hasErrors {
