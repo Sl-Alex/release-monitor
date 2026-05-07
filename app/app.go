@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	ExitOK = 0
+	ExitOK = iota
 	ExitUpdatesAvailable
 	ExitError
 )
