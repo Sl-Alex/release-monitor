@@ -13,6 +13,8 @@ release-monitor --help
 Usage of release-monitor:
   -c string
         short for --config (default "config.json")
+  -check
+        validate config and exit
   -config string
         path to config file (default "config.json")
   -format string

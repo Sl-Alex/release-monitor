@@ -7,6 +7,12 @@ import (
 	"release-monitor/transform"
 )
 
+const (
+	ExitOK = 0
+	ExitUpdatesAvailable
+	ExitError
+)
+
 func Process(ctx app_context.Context, app model.AppConfig) model.Result {
 	var result model.Result
 

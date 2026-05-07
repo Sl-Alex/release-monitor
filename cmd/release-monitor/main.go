@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
@@ -24,6 +23,7 @@ func main() {
 	timeout := flag.Int("timeout", 10, "http timeout in seconds")
 	retries := flag.Int("retries", 2, "number of retries")
 	format := flag.String("format", "text", "output format: text|json")
+	check := flag.Bool("check", false, "validate config and exit")
 
 	flag.Parse()
 
@@ -42,7 +42,13 @@ func main() {
 
 	cfg, err := config.LoadConfig(*configPath)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(app.ExitError)
+	}
+
+	if *check {
+		fmt.Println("Config validation succeeded")
+		os.Exit(app.ExitOK)
 	}
 
 	hasUpdates := false
@@ -87,20 +93,21 @@ func main() {
 
 		data, err := json.MarshalIndent(output, "", "  ")
 		if err != nil {
-			log.Fatal(err)
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(app.ExitError)
 		}
 
 		fmt.Println(string(data))
 	}
 
 	if hasErrors {
-		os.Exit(2)
+		os.Exit(app.ExitError)
 	}
 
 	if hasUpdates {
-		os.Exit(1)
+		os.Exit(app.ExitUpdatesAvailable)
 	}
 
-	os.Exit(0)
+	os.Exit(app.ExitOK)
 
 }
